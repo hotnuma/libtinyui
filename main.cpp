@@ -1,7 +1,5 @@
 #include "MainWindow.h"
 
-#include <print.h>
-
 int main(int argc, char **argv)
 
 {
@@ -11,8 +9,6 @@ int main(int argc, char **argv)
     wnd1->showAll();
 
     gtk_main();
-
-    //print("exit");
 
     return 0;
 }

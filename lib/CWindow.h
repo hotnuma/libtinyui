@@ -31,6 +31,9 @@ inline void* getWindowObject(GtkWidget *wnd)
     return (void*) g_object_get_data(G_OBJECT(wnd), CWINDOWOBJECT);
 }
 
+class CWindow;
+
+bool isLastWindow(CWindow *wnd);
 
 class CWindow
 {

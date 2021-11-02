@@ -1,5 +1,22 @@
 #include "CWindow.h"
 
+bool isLastWindow(CWindow *wnd)
+{
+    GList *list = gtk_window_list_toplevels();
+
+    for (GList *i = list; i; i = i->next)
+    {
+        CWindow *cwnd = (CWindow*) getWindowObject(GTK_WIDGET(i->data));
+
+        if (cwnd && cwnd != wnd)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 CWindow::CWindow()
 {
 }

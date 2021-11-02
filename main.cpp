@@ -5,8 +5,8 @@ int main(int argc, char **argv)
 {
     gtk_init(&argc, &argv);
 
-    MainWindow *wnd1 = new MainWindow();
-    wnd1->showAll();
+    MainWindow *wnd = new MainWindow();
+    wnd->showAll();
 
     gtk_main();
 

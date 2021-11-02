@@ -4,14 +4,14 @@
 #include <gtk/gtk.h>
 
 
-#define MAP_SIMPLE(C, R, func, T) \
+#define SIGNAL_MAP1(C, R, func, T) \
 static R func##CB(T param, C data) \
 { \
     return (data)->func(param); \
 } \
 R func(T param); \
 
-#define MAP_DOUBLE(C, R, func, T, TT) \
+#define SIGNAL_MAP2(C, R, func, T, TT) \
 static R func##CB(T param1, TT param2, C data) \
 { \
     return (data)->func(param1, param2); \

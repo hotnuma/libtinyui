@@ -12,7 +12,7 @@ public:
 
 private:
 
-    SIGNAL_MAP1(MainWindow*, void, _onDestroy, GtkWidget*)
+    SMAP1(MainWindow*, void, _onDestroy, GtkWidget*)
 
     void _createWindow();
 

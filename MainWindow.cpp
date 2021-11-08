@@ -26,25 +26,14 @@ void MainWindow::_createWindow()
 
 void MainWindow::_onDestroy(GtkWidget*)
 {
-    bool quit = true;
+    //print("destroy");
 
-    GList *list = gtk_window_list_toplevels();
-
-    for (GList *i = list; i; i = i->next)
-    {
-        CWindow *window = (CWindow*) getWindowObject(GTK_WIDGET(i->data));
-
-        if (window && window != this)
-        {
-            quit = false;
-            break;
-        }
-    }
+    bool last = isLastWindow(this);
 
     setWindowObject(_wnd, nullptr);
     delete this;
 
-    if (quit)
+    if (last)
         gtk_main_quit();
 }
 

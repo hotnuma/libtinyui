@@ -7,14 +7,14 @@ class CWindow;
 
 #define CB(f) G_CALLBACK(f##CB)
 
-#define SMAP1(C, R, func, T) \
+#define CMAP1(C, R, func, T) \
 static R func##CB(T param, C data) \
 { \
     return (data)->func(param); \
 } \
 R func(T param); \
 
-#define SMAP2(C, R, func, T, TT) \
+#define CMAP2(C, R, func, T, TT) \
 static R func##CB(T param1, TT param2, C data) \
 { \
     return (data)->func(param1, param2); \

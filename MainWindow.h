@@ -12,7 +12,7 @@ public:
 
 private:
 
-    SMAP1(MainWindow*, void, _onDestroy, GtkWidget*)
+    CMAP1(MainWindow*, void, _onDestroy, GtkWidget*)
 
     void _createWindow();
 

@@ -20,7 +20,7 @@
 #include "etkaction.h"
 
 
-// Window init / destroy ------------------------------------------------------
+// Window init ----------------------------------------------------------------
 
 GtkAccelGroup* etk_actions_init(GtkWindow *window, EtkActionEntry *actions)
 {
@@ -30,31 +30,6 @@ GtkAccelGroup* etk_actions_init(GtkWindow *window, EtkActionEntry *actions)
     gtk_window_add_accel_group(window, accel_group);
 
     return accel_group;
-}
-
-void etk_actions_dispose(GtkWindow *window, GtkAccelGroup *accel_group)
-{
-    if (!accel_group)
-        return;
-
-    gtk_accel_group_disconnect(accel_group, NULL);
-    gtk_window_remove_accel_group(window, accel_group);
-    g_object_unref(accel_group);
-}
-
-void etk_actions_translate(EtkActionEntry *action_entries)
-{
-    int i = 0;
-    while (action_entries[i].id != 0)
-    {
-        action_entries[i].label_text =
-            g_strdup(g_dgettext(NULL, action_entries[i].label_text));
-
-        action_entries[i].tooltip_text =
-            g_strdup(g_dgettext(NULL, action_entries[i].tooltip_text));
-
-        ++i;
-    }
 }
 
 void etk_actions_map_accels(const EtkActionEntry *action_entries)
@@ -115,6 +90,34 @@ void etk_actions_connect_accels(const EtkActionEntry *action_entries,
     }
 }
 
+void etk_actions_translate(EtkActionEntry *action_entries)
+{
+    int i = 0;
+    while (action_entries[i].id != 0)
+    {
+        action_entries[i].label_text =
+            g_strdup(g_dgettext(NULL, action_entries[i].label_text));
+
+        action_entries[i].tooltip_text =
+            g_strdup(g_dgettext(NULL, action_entries[i].tooltip_text));
+
+        ++i;
+    }
+}
+
+
+// Window dispose -------------------------------------------------------------
+
+void etk_actions_dispose(GtkWindow *window, GtkAccelGroup *accel_group)
+{
+    if (!accel_group)
+        return;
+
+    gtk_accel_group_disconnect(accel_group, NULL);
+    gtk_window_remove_accel_group(window, accel_group);
+    g_object_unref(accel_group);
+}
+
 void etk_actions_disconnect_accels(const EtkActionEntry *action_entries,
                                    GtkAccelGroup        *accel_group)
 {
@@ -134,8 +137,13 @@ void etk_actions_disconnect_accels(const EtkActionEntry *action_entries,
         {
             GtkAccelKey key;
 
-            if (gtk_accel_map_lookup_entry(action_entries[i].accel_path, &key) == TRUE)
-                gtk_accel_group_disconnect_key(accel_group, key.accel_key, key.accel_mods);
+            if (gtk_accel_map_lookup_entry(
+                        action_entries[i].accel_path, &key) == TRUE)
+            {
+                gtk_accel_group_disconnect_key(accel_group,
+                                               key.accel_key,
+                                               key.accel_mods);
+            }
         }
 
         ++i;
@@ -143,7 +151,7 @@ void etk_actions_disconnect_accels(const EtkActionEntry *action_entries,
 }
 
 const EtkActionEntry* etk_actions_get_entry(const EtkActionEntry *action_entries,
-                                                 guint                id)
+                                            guint                id)
 {
     int i = 0;
     while (action_entries[i].id != 0)
@@ -161,9 +169,10 @@ const EtkActionEntry* etk_actions_get_entry(const EtkActionEntry *action_entries
 
 void etk_menu_item_set_accel_label(GtkMenuItem *menu_item, const gchar *accel_path)
 {
-    GtkAccelKey  key;
-    GList       *list, *lp;
-    gboolean     found = FALSE;
+    GtkAccelKey key;
+    GList *list;
+    GList *lp;
+    gboolean found = FALSE;
 
     g_return_if_fail(GTK_IS_MENU_ITEM(menu_item));
 
@@ -172,7 +181,9 @@ void etk_menu_item_set_accel_label(GtkMenuItem *menu_item, const gchar *accel_pa
     if (accel_path != NULL)
         found = gtk_accel_map_lookup_entry(accel_path, &key);
 
-    /* Only show the relevant accelerator, do not automatically connect to the callback */
+    /* Only show the relevant accelerator, do not automatically connect
+     * to the callback */
+
     for (lp = list; lp != NULL; lp = lp->next)
     {
         if (GTK_IS_ACCEL_LABEL(lp->data))
@@ -204,7 +215,8 @@ static void _etk_menu_fill_item(GtkMenuShell *menu,
     etk_menu_item_set_accel_label(GTK_MENU_ITEM(item), accel_path);
 
     if (callback != NULL)
-        g_signal_connect_swapped(G_OBJECT(item), "activate", callback, callback_param);
+        g_signal_connect_swapped(G_OBJECT(item), "activate",
+                                 callback, callback_param);
 
     if (menu != NULL)
         gtk_menu_shell_append(menu, item);

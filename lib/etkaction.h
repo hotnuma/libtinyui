@@ -36,18 +36,23 @@ typedef enum
  * The idea is to provide a fixed list of #XfceGtkActionEntrys:
  * - use etk_translate_action_entries() once to translate the list
  * - use etk_accel_map_add_entries() once to register the provided accelerators
- * - use etk_get_action_entry_by_id() to find a single entry, e.g. by using a enumeration
- * - use etk_*_new_from_action_entry() to create the specific menu- or tool-items from the entry
+ * - use etk_get_action_entry_by_id() to find a single entry, e.g. by using
+ *   a enumeration
+ * - use etk_*_new_from_action_entry() to create the specific menu-
+ *   or tool-items from the entry
  **/
+
+typedef struct _EtkActionEntry EtkActionEntry;
 
 struct _EtkActionEntry
 {
     guint       id;
+
     const gchar *accel_path;
     const gchar *default_accelerator;
 
-    // menu_item data is optional, only relevant
-    // if there exists a menu_item for that accelerator
+    // menu_item data is optional, only relevant if there exists a menu_item
+    // for that accelerator
     EtkMenuItem item_type;
     gchar       *label_text;
     gchar       *tooltip_text;
@@ -56,24 +61,19 @@ struct _EtkActionEntry
     GCallback   callback;
 };
 
-typedef struct _EtkActionEntry EtkActionEntry;
-
-void etk_actions_translate(EtkActionEntry *action_entries);
-
 GtkAccelGroup* etk_actions_init(GtkWindow *window, EtkActionEntry *actions);
-void etk_actions_dispose(GtkWindow *window, GtkAccelGroup *accel_group);
-
 void etk_actions_map_accels(const EtkActionEntry *action_entries);
 void etk_actions_connect_accels(const EtkActionEntry *action_entries,
                                 GtkAccelGroup        *accel_group,
                                 gpointer             callback_data);
+void etk_actions_translate(EtkActionEntry *action_entries);
+
+void etk_actions_dispose(GtkWindow *window, GtkAccelGroup *accel_group);
 void etk_actions_disconnect_accels(const EtkActionEntry *action_entries,
                                    GtkAccelGroup        *accel_group);
 
-
 const EtkActionEntry* etk_actions_get_entry(const EtkActionEntry *action_entries,
                                             guint                id);
-
 void etk_menu_item_set_accel_label(GtkMenuItem *menu_item, const gchar *accel_path);
 
 GtkWidget* etk_menu_item_new(GtkMenuShell *menu,

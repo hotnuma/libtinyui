@@ -26,6 +26,7 @@ tinyui_deps = [
 
 tinyui_headers = [
     'lib/etkaction.h',
+    'lib/etktype.h',
 ]
 
 tinyui_sources = [

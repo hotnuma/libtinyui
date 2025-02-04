@@ -7,6 +7,7 @@ INCLUDEPATH = lib
 
 HEADERS = \
     lib/etkaction.h \
+    lib/etktype.h \
 
 SOURCES = \
     lib/etkaction.c \

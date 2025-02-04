@@ -2,25 +2,17 @@ TEMPLATE = app
 TARGET = testui
 CONFIG = c++11 link_pkgconfig
 PKGCONFIG = gtk+-3.0
-DEFINES =
+DEFINES = _GNU_SOURCE __STDC_FORMAT_MACROS
 INCLUDEPATH = lib
 
+HEADERS = \
+    lib/etkaction.h \
+
 SOURCES = \
-    0Temp.cpp \
-    MainActions.cpp \
-    MainWindow.cpp \
-    lib/CSingleInstance.cpp \
-    lib/CWindow.cpp \
-    lib/libsocket.cpp \
-    main.cpp \
+    lib/etkaction.c \
 
 DISTFILES = \
     install.sh \
     meson.build \
-
-HEADERS += \
-    MainWindow.h \
-    lib/CSingleInstance.h \
-    lib/CWindow.h \
-    lib/libsocket.h
+    Readme.md \
 

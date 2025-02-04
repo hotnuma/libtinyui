@@ -1,46 +1,49 @@
 project(
     'tinyui',
-    ['cpp'],
+    ['c'],
     version : '1.0',
-    license : 'GPL-2.0',
+    license : 'LGPL-2.0',
     default_options : [
-        'cpp_std=c++11',
+        'c_std=c99',
     ],
 )
 
-cpp_args = [
-#    '-DGDK_DISABLE_DEPRECATED',
-#    '-DGTK_DISABLE_DEPRECATED',
+c_args = [
     '-Wall',
-    '-fno-rtti',
-    '-fno-exceptions',
-    '-O2',
+    '-Wextra',
+    '-D_GNU_SOURCE',
+    '-D__STDC_FORMAT_MACROS',
 ]
+
+if get_option('buildtype') == 'plain'
+  c_args += '-O2'
+endif
 
 tinyui_deps = [
+    #dependency('tinycpp', static : true),
     dependency('gtk+-3.0'),
-    dependency('tinycpp', static : true),
 ]
 
-install_headers(
-    'lib/CWindow.h',
-    'lib/CSingleInstance.h',
-    'lib/libsocket.h',
-)
+tinyui_headers = [
+    'lib/etkaction.h',
+]
 
 tinyui_sources = [
-    'lib/CWindow.cpp',
-    'lib/CSingleInstance.cpp',
-    'lib/libsocket.cpp',
+    'lib/etkaction.c',
 ]
+
+# Build and install library ---------------------------------------------------
 
 tinyui = static_library(
     'tinyui',
-    cpp_args : cpp_args,
+    include_directories : ['lib'],
+    c_args : c_args,
     dependencies : tinyui_deps,
     sources : tinyui_sources,
     install : true,
 )
+
+install_headers(tinyui_headers, subdir: 'tinyui')
 
 pkg_mod = import('pkgconfig')
 pkg_mod.generate(
@@ -48,32 +51,26 @@ pkg_mod.generate(
     version : '1.0',
     name : 'libtinyui',
     filebase : 'tinyui',
-    description : 'A simple C++ library.',
+    subdirs : 'tinyui',
+    description : 'A Gtk3 extension library.',
 )
 
-#pkg = import('pkgconfig')
-#lib = library('winui')
-#pkg.generate(lib)
+#~ testui_deps = [
+#~     dependency('gtk+-3.0'),
+#~     dependency('tinyui', static : true),
+#~ ]
 
-testui_deps = [
-    dependency('gtk+-3.0'),
-    dependency('tinycpp', static : true),
-]
+#~ testui_sources = [
+#~     'main.c',
+#~ ]
 
-testui_sources = [
-    'lib/CWindow.cpp',
-    'main.cpp',
-    'MainActions.cpp',
-    'MainWindow.cpp',
-]
-
-executable(
-    'testui',
-    include_directories : 'lib',
-    cpp_args : cpp_args,
-    dependencies : testui_deps,
-    sources : testui_sources,
-    link_with : [tinyui],
-)
+#~ executable(
+#~     'testui',
+#~     include_directories : 'lib',
+#~     c_args : c_args,
+#~     dependencies : testui_deps,
+#~     sources : testui_sources,
+#~     link_with : [tinyui],
+#~ )
 
 

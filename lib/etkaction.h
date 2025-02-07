@@ -61,6 +61,8 @@ struct _EtkActionEntry
     GCallback   callback;
 };
 
+// Creation -------------------------------------------------------------------
+
 GtkAccelGroup* etk_actions_init(GtkWindow *window, EtkActionEntry *actions);
 void etk_actions_map_accels(const EtkActionEntry *action_entries);
 void etk_actions_connect_accels(const EtkActionEntry *action_entries,
@@ -68,13 +70,20 @@ void etk_actions_connect_accels(const EtkActionEntry *action_entries,
                                 gpointer             callback_data);
 void etk_actions_translate(EtkActionEntry *action_entries);
 
+// Destruction ----------------------------------------------------------------
+
 void etk_actions_dispose(GtkWindow *window, GtkAccelGroup *accel_group);
-void etk_actions_disconnect_accels(const EtkActionEntry *action_entries,
-                                   GtkAccelGroup        *accel_group);
+void etk_actions_disconnect_accels(const EtkActionEntry   *action_entries,
+                                   GtkAccelGroup          *accel_group);
+
+// ----------------------------------------------------------------------------
 
 const EtkActionEntry* etk_actions_get_entry(const EtkActionEntry *action_entries,
                                             guint                id);
 void etk_menu_item_set_accel_label(GtkMenuItem *menu_item, const gchar *accel_path);
+void etk_menu_append_separator(GtkMenuShell *menu);
+
+// ----------------------------------------------------------------------------
 
 GtkWidget* etk_menu_item_new(GtkMenuShell *menu,
                              const gchar  *label_text,
@@ -82,6 +91,13 @@ GtkWidget* etk_menu_item_new(GtkMenuShell *menu,
                              const gchar  *accel_path,
                              GCallback    callback,
                              GObject      *callback_param);
+
+GtkWidget* etk_menu_item_new_from_action(GtkMenuShell         *menu,
+                                         int                  id,
+                                         const EtkActionEntry *action_entries,
+                                         GObject              *callback_param);
+
+// ----------------------------------------------------------------------------
 
 GtkWidget* etk_image_menu_item_new(GtkMenuShell *menu,
                                    const gchar  *label_text,
@@ -99,6 +115,8 @@ GtkWidget* etk_image_menu_item_new_from_icon_name(GtkMenuShell *menu,
                                                   GCallback    callback,
                                                   GObject      *callback_param);
 
+// ----------------------------------------------------------------------------
+
 GtkWidget* etk_check_menu_item_new(GtkMenuShell *menu,
                                    const gchar  *label_text,
                                    const gchar  *tooltip_text,
@@ -115,19 +133,13 @@ GtkWidget* etk_radio_menu_item_new(GtkMenuShell *menu,
                                    GCallback    callback,
                                    GObject      *callback_param);
 
-GtkWidget* etk_menu_item_new_from_action(GtkMenuShell         *menu,
-                                         int                  id,
-                                         const EtkActionEntry *action_entries,
-                                         GObject              *callback_param);
-
 GtkWidget* etk_toggle_menu_item_new_from_action(GtkMenuShell         *menu,
                                                 int                  id,
                                                 const EtkActionEntry *action_entries,
                                                 gboolean             active,
                                                 GObject              *callback_param);
 
-void etk_menu_append_separator(GtkMenuShell *menu);
-
+// ----------------------------------------------------------------------------
 
 GtkWidget* etk_tool_button_new_from_action(GtkToolbar           *toolbar,
                                            int                  id,

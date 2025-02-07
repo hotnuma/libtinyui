@@ -346,7 +346,7 @@ GtkWidget* etk_menu_item_new_from_action(GtkMenuShell         *menu,
 
     g_return_val_if_fail(action_entry != NULL, NULL);
 
-    if (action_entry->item_type == ETK_IMAGE_MENU_ITEM)
+    if (action_entry->item_type == ETK_MENU_ITEM_IMAGE)
     {
         return etk_image_menu_item_new_from_icon_name(menu,
                                                       action_entry->label_text,
@@ -382,7 +382,7 @@ GtkWidget* etk_toggle_menu_item_new_from_action(GtkMenuShell         *menu,
 
     g_return_val_if_fail(action_entry != NULL, NULL);
 
-    if (action_entry->item_type == ETK_CHECK_MENU_ITEM)
+    if (action_entry->item_type == ETK_MENU_ITEM_CHECK)
     {
         return etk_check_menu_item_new(menu,
                                        action_entry->label_text,
@@ -393,7 +393,7 @@ GtkWidget* etk_toggle_menu_item_new_from_action(GtkMenuShell         *menu,
                                        callback_param);
     }
 
-    if (action_entry->item_type == ETK_RADIO_MENU_ITEM)
+    if (action_entry->item_type == ETK_MENU_ITEM_RADIO)
     {
         return etk_radio_menu_item_new(menu,
                                        action_entry->label_text,

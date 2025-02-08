@@ -8,9 +8,11 @@ INCLUDEPATH = lib
 HEADERS = \
     lib/etkaction.h \
     lib/etktype.h \
+    lib/etkwidgetlist.h
 
 SOURCES = \
     lib/etkaction.c \
+    lib/etkwidgetlist.c
 
 DISTFILES = \
     install.sh \

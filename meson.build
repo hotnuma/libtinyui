@@ -27,10 +27,12 @@ tinyui_deps = [
 tinyui_headers = [
     'lib/etkaction.h',
     'lib/etktype.h',
+    'lib/etkwidgetlist.h',
 ]
 
 tinyui_sources = [
     'lib/etkaction.c',
+    'lib/etkwidgetlist.c',
 ]
 
 # Build and install library ---------------------------------------------------

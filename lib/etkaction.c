@@ -108,14 +108,16 @@ void etk_actions_translate(EtkActionEntry *action_entries)
 
 // Window dispose -------------------------------------------------------------
 
-void etk_actions_dispose(GtkWindow *window, GtkAccelGroup *accel_group)
+GtkAccelGroup* etk_actions_dispose(GtkWindow *window, GtkAccelGroup *accel_group)
 {
     if (!accel_group)
-        return;
+        return NULL;
 
     gtk_accel_group_disconnect(accel_group, NULL);
     gtk_window_remove_accel_group(window, accel_group);
     g_object_unref(accel_group);
+
+    return NULL;
 }
 
 void etk_actions_disconnect_accels(const EtkActionEntry *action_entries,

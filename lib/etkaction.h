@@ -31,7 +31,7 @@ typedef enum
 
 } EtkMenuItem;
 
-/**
+/*
  * Replacement for the deprecated #GtkActionEntry.
  * The idea is to provide a fixed list of #XfceGtkActionEntrys:
  * - use etk_translate_action_entries() once to translate the list
@@ -40,7 +40,7 @@ typedef enum
  *   a enumeration
  * - use etk_*_new_from_action_entry() to create the specific menu-
  *   or tool-items from the entry
- **/
+ */
 
 typedef struct _EtkActionEntry EtkActionEntry;
 
@@ -72,7 +72,7 @@ void etk_actions_translate(EtkActionEntry *action_entries);
 
 // Destruction ----------------------------------------------------------------
 
-void etk_actions_dispose(GtkWindow *window, GtkAccelGroup *accel_group);
+GtkAccelGroup* etk_actions_dispose(GtkWindow *window, GtkAccelGroup *accel_group);
 void etk_actions_disconnect_accels(const EtkActionEntry   *action_entries,
                                    GtkAccelGroup          *accel_group);
 
